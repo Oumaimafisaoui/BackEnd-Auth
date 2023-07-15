@@ -59,7 +59,7 @@ export class AuthService {
     }
   }
 
-  signToken(userId: number, email: string) : Promise<string> {
+  async signToken(userId: number, email: string) {
     //1 - sign the token aka validate it
 
     //data encoded insode the jwt
@@ -67,11 +67,16 @@ export class AuthService {
       sub: userId,
       email,
     };
-    const secret = this.conf.get("JWT_SEC");
 
-    return this.jwt.signAsync(payload, {
+    const secret = this.conf.get('JWT_SEC');
+
+    const token = await this.jwt.signAsync(payload, {
       expiresIn: '15m',
       secret: secret,
     });
+
+    return {
+      access_token: token,
+    };
   }
 }
