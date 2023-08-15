@@ -1,0 +1,2 @@
+Decorator:
+function that adds metadata to the current class
